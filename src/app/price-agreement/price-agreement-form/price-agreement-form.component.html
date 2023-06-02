@@ -1,0 +1,94 @@
+<div class="container">
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="isSubmitted && errorMessage"
+    >
+      {{ errorMessage }}
+    </div>
+    <p>Pas de status van deze inschrijving aan:</p>
+    <form (ngSubmit)="onSubmit()" [formGroup]="priceAgreementForm">
+        <div class="form-group">
+            <label for="paymentDate">Betalingsdatum</label>
+            <input
+              type="date"
+              class="form-control"
+              id="paymentDate"
+              name="paymentDate"
+              placeholder="paymentDate"
+              formControlName="paymentDate"
+            />
+          </div>
+          <div class="form-group">
+            <label for="priceBillable">Originele prijs</label>
+            <input
+              type="number"
+              class="form-control"
+              id="priceBillable"
+              name="priceBillable"
+              placeholder="priceBillable"
+              formControlName="priceBillable"
+            />
+          </div>
+          <div class="form-group">
+            <label for="discountAmount">Toe te passen korting</label>
+            <input
+              type="number"
+              class="form-control"
+              id="discountAmount"
+              name="discountAmount"
+              placeholder="discountAmount"
+              formControlName="discountAmount"
+            />
+          </div>
+ 
+          <div class="form-group">
+            <label for="priceAgreementStatusId">Status</label>
+            <select
+              id="priceAgreementStatusId"
+              name="priceAgreementStatusId"
+              formControlName="priceAgreementStatusId"
+              required
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option
+                *ngFor="let type of optionsByStatus | async"
+                [ngValue]="type.id"
+                [selected]="type.id === priceAgreementId"
+                >{{ type.name }}</option
+              >
+            </select>
+          </div>
+          <div class="form-group d-none">
+            <label for="contractId">contractId</label>
+            <input
+              type="number"
+              class="form-control"
+              id="contractId"
+              name="contractId"
+              placeholder="contractId"
+              formControlName="contractId"
+            />
+          </div>
+          <div class="form-group">
+            <label for="comment">Opmerking</label>
+            <input
+              type="text"
+              class="form-control"
+              id="comment"
+              name="comment"
+              placeholder="Opmerking"
+              formControlName="comment"
+            />
+          </div>
+          <button
+          type="submit"
+          class="btn btn-primary btn-spacing"
+          *ngIf="isEdit"
+          [disabled]="!priceAgreementForm.valid"
+        >
+          Opslaan
+        </button>
+        <a class="btn btn-secondary btn-spacing" routerLink="/subscriptionList/">Annuleren</a>
+    </form>
